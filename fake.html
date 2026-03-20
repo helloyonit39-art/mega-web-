@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Full Fake Data - Maison</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', sans-serif; background: #f5f2ed; color: #1a1714; padding: 2rem; }
+    h1 { font-size: 2.2rem; margin-bottom: 0.3rem; }
+    h2 { font-size: 1.2rem; margin: 2.5rem 0 1rem; color: #9c9488; border-bottom: 2px solid #e8e3db; padding-bottom: 0.5rem; }
+    p  { font-size: 0.88rem; color: #9c9488; margin-bottom: 1rem; }
+
+    .grid-2 { display: grid; grid-template-columns: repeat(2,1fr); gap: 1rem; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 1rem; }
+    .grid-5 { display: grid; grid-template-columns: repeat(5,1fr); gap: 1rem; }
+    .divider { border: none; border-top: 1px solid #e8e3db; margin: 2rem 0; }
+
+    /* CARDS */
+    .card { background:#fff; border-radius:8px; padding:1.4rem; box-shadow:0 2px 12px rgba(0,0,0,0.06); transition:transform 0.2s,box-shadow 0.2s; }
+    .card:hover { transform:translateY(-3px); box-shadow:0 8px 24px rgba(0,0,0,0.1); }
+    .card-title { font-size:1rem; font-weight:600; margin-bottom:0.3rem; }
+    .card-sub   { font-size:0.75rem; color:#9c9488; margin-bottom:0.5rem; }
+    .card-price { font-size:1.3rem; font-weight:700; color:#c8a97e; }
+
+    /* BUTTONS */
+    .btn { display:inline-block; padding:0.6rem 1.4rem; border:none; border-radius:4px; font-size:0.82rem; cursor:pointer; font-family:inherit; transition:all 0.2s; }
+    .btn-primary   { background:#1a1714; color:#fff; }
+    .btn-secondary { background:transparent; color:#1a1714; border:1px solid #1a1714; }
+    .btn-warm      { background:#c8a97e; color:#fff; }
+    .btn-danger    { background:#e05252; color:#fff; }
+    .btn-success   { background:#2d6a2d; color:#fff; }
+    .btn-ghost     { background:transparent; color:#9c9488; border:1px solid #e8e3db; }
+    .btn-purple    { background:#7c3aed; color:#fff; }
+    .btn-pink      { background:#db2777; color:#fff; }
+    .btn-sm { padding:0.35rem 0.9rem; font-size:0.72rem; }
+    .btn-lg { padding:0.9rem 2rem; font-size:0.95rem; }
+    .btn-rounded { border-radius:50px; }
+    .btn-icon { display:inline-flex; align-items:center; gap:0.4rem; }
+
+    /* BADGES */
+    .badge { display:inline-block; padding:0.2rem 0.65rem; border-radius:20px; font-size:0.7rem; font-weight:500; margin-right:0.3rem; }
+    .badge-green  { background:#e8f4e8; color:#2d6a2d; }
+    .badge-gold   { background:#fdf3e3; color:#a0620a; }
+    .badge-blue   { background:#eef0fb; color:#3a42a0; }
+    .badge-red    { background:#fdeaea; color:#a02020; }
+    .badge-gray   { background:#f0eeec; color:#6b6560; }
+    .badge-dark   { background:#1a1714; color:#fff; }
+    .badge-purple { background:#f3e8ff; color:#7c3aed; }
+    .badge-pink   { background:#fce7f3; color:#db2777; }
+    .badge-teal   { background:#e0f7f4; color:#0d7a6a; }
+    .badge-orange { background:#fff3e0; color:#e65100; }
+
+    /* STATUS */
+    .status { display:inline-flex; align-items:center; gap:0.4rem; font-size:0.78rem; font-weight:500; }
+    .status::before { content:''; width:8px; height:8px; border-radius:50%; display:inline-block; }
+    .status-delivered::before  { background:#2d6a2d; } .status-delivered  { color:#2d6a2d; }
+    .status-shipped::before    { background:#a0620a; } .status-shipped    { color:#a0620a; }
+    .status-processing::before { background:#3a42a0; } .status-processing { color:#3a42a0; }
+    .status-cancelled::before  { background:#a02020; } .status-cancelled  { color:#a02020; }
+    .status-refunded::before   { background:#7c3aed; } .status-refunded   { color:#7c3aed; }
+    .status-pending::before    { background:#9c9488; } .status-pending    { color:#9c9488; }
+
+    /* ALERTS */
+    .alert { padding:0.9rem 1.2rem; border-radius:6px; font-size:0.85rem; margin-bottom:0.7rem; border-left:4px solid; }
+    .alert-success { background:#f0faf0; border-color:#2d6a2d; color:#2d6a2d; }
+    .alert-warning { background:#fdf8ee; border-color:#a0620a; color:#a0620a; }
+    .alert-error   { background:#fdf0f0; border-color:#e05252; color:#e05252; }
+    .alert-info    { background:#eef2fb; border-color:#3a42a0; color:#3a42a0; }
+    .alert-purple  { background:#f5f0ff; border-color:#7c3aed; color:#7c3aed; }
+
+    /* STATS */
+    .stat-box { background:#fff; border-radius:8px; padding:1.4rem; box-shadow:0 2px 12px rgba(0,0,0,0.05); }
+    .stat-label { font-size:0.7rem; letter-spacing:0.2em; text-transform:uppercase; color:#9c9488; margin-bottom:0.4rem; }
+    .stat-value { font-size:2rem; font-weight:700; color:#1a1714; line-height:1; }
+    .stat-sub   { font-size:0.75rem; color:#9c9488; margin-top:0.3rem; }
+    .stat-up    { color:#2d6a2d; font-weight:600; }
+    .stat-down  { color:#e05252; font-weight:600; }
+
+    /* PROGRESS */
+    .progress-wrap { margin-bottom:0.9rem; }
+    .progress-label { display:flex; justify-content:space-between; font-size:0.74rem; color:#9c9488; margin-bottom:0.3rem; }
+    .progress-bar { height:7px; background:#e8e3db; border-radius:10px; overflow:hidden; }
+    .progress-fill { height:100%; border-radius:10px; }
+    .fill-dark   { background:#1a1714; }
+    .fill-warm   { background:#c8a97e; }
+    .fill-green  { background:#2d6a2d; }
+    .fill-red    { background:#e05252; }
+    .fill-blue   { background:#3a42a0; }
+    .fill-purple { background:#7c3aed; }
+
+    /* FORMS */
+    .form-group { margin-bottom:1.1rem; }
+    .form-group label { display:block; font-size:0.7rem; letter-spacing:0.15em; text-transform:uppercase; color:#9c9488; margin-bottom:0.35rem; }
+    .form-group input,
+    .form-group select,
+    .form-group textarea { width:100%; padding:0.65rem 1rem; border:1px solid #e8e3db; border-radius:4px; font-family:inherit; font-size:0.87rem; color:#1a1714; background:#fff; outline:none; transition:border-color 0.2s; }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus { border-color:#c8a97e; }
+    .form-group textarea { resize:vertical; min-height:80px; }
+    .input-error   { border-color:#e05252 !important; }
+    .input-success { border-color:#2d6a2d !important; }
+    .input-disabled { background:#f5f2ed !important; color:#9c9488 !important; cursor:not-allowed; }
+    .form-hint { font-size:0.7rem; color:#9c9488; margin-top:0.25rem; }
+    .form-hint.error { color:#e05252; }
+    .form-hint.success { color:#2d6a2d; }
+    .checkbox-group { display:flex; align-items:center; gap:0.5rem; margin-bottom:0.6rem; font-size:0.85rem; }
+    .checkbox-group input[type=checkbox] { width:16px; height:16px; accent-color:#1a1714; }
+    .radio-group { display:flex; align-items:center; gap:0.5rem; margin-bottom:0.6rem; font-size:0.85rem; }
+    .radio-group input[type=radio] { accent-color:#c8a97e; }
+
+    /* AVATAR */
+    .avatar { width:42px; height:42px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:600; font-size:0.85rem; color:#fff; flex-shrink:0; }
+    .avatar-sm { width:30px; height:30px; font-size:0.65rem; }
+    .avatar-lg { width:60px; height:60px; font-size:1.1rem; }
+    .avatar-dark   { background:#1a1714; }
+    .avatar-warm   { background:#c8a97e; }
+    .avatar-stone  { background:#9c9488; }
+    .avatar-green  { background:#2d6a2d; }
+    .avatar-blue   { background:#3a42a0; }
+    .avatar-purple { background:#7c3aed; }
+    .avatar-pink   { background:#db2777; }
+
+    /* USER ROW */
+    .user-row { display:flex; align-items:center; gap:1rem; padding:0.75rem 1rem; border-radius:6px; background:#fff; margin-bottom:0.5rem; box-shadow:0 1px 4px rgba(0,0,0,0.05); }
+    .user-info .name  { font-size:0.88rem; font-weight:500; }
+    .user-info .email { font-size:0.75rem; color:#9c9488; }
+
+    /* TABLE */
+    table { width:100%; border-collapse:collapse; background:#fff; border-radius:8px; overflow:hidden; box-shadow:0 2px 12px rgba(0,0,0,0.05); font-size:0.83rem; }
+    th { background:#1a1714; color:#fff; padding:0.7rem 1rem; text-align:left; font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; }
+    td { padding:0.7rem 1rem; border-bottom:1px solid #f0eeec; }
+    tr:last-child td { border-bottom:none; }
+    tr:hover td { background:#faf9f7; }
+
+    /* TAGS */
+    .tag { display:inline-block; padding:0.2rem 0.6rem; border:1px solid #e8e3db; border-radius:4px; font-size:0.72rem; color:#9c9488; margin:0.2rem; cursor:pointer; transition:all 0.2s; }
+    .tag:hover,.tag.active { background:#1a1714; color:#fff; border-color:#1a1714; }
+
+    /* TOOLTIP */
+    .tooltip-wrap { position:relative; display:inline-block; }
+    .tooltip-wrap .tooltip { visibility:hidden; background:#1a1714; color:#fff; font-size:0.72rem; padding:0.35rem 0.7rem; border-radius:4px; position:absolute; bottom:130%; left:50%; transform:translateX(-50%); white-space:nowrap; opacity:0; transition:opacity 0.2s; }
+    .tooltip-wrap:hover .tooltip { visibility:visible; opacity:1; }
+
+    /* TOGGLE */
+    .toggle-wrap { display:flex; align-items:center; gap:0.7rem; font-size:0.85rem; margin-bottom:0.7rem; }
+    .toggle { position:relative; width:42px; height:24px; }
+    .toggle input { opacity:0; width:0; height:0; }
+    .toggle-slider { position:absolute; inset:0; background:#e8e3db; border-radius:24px; cursor:pointer; transition:0.3s; }
+    .toggle-slider::before { content:''; position:absolute; width:18px; height:18px; left:3px; bottom:3px; background:#fff; border-radius:50%; transition:0.3s; }
+    .toggle input:checked + .toggle-slider { background:#1a1714; }
+    .toggle input:checked + .toggle-slider::before { transform:translateX(18px); }
+
+    /* RATING STARS */
+    .stars { color:#c8a97e; font-size:0.95rem; letter-spacing:0.05em; }
+    .stars-gray { color:#e8e3db; }
+
+    /* BREADCRUMB */
+    .breadcrumb { display:flex; align-items:center; gap:0.5rem; font-size:0.8rem; color:#9c9488; margin-bottom:1rem; }
+    .breadcrumb a { color:#9c9488; text-decoration:none; cursor:pointer; }
+    .breadcrumb a:hover { color:#1a1714; }
+    .breadcrumb span { color:#1a1714; }
+
+    /* PAGINATION */
+    .pagination { display:flex; gap:0.4rem; align-items:center; }
+    .page-btn { width:34px; height:34px; display:flex; align-items:center; justify-content:center; border:1px solid #e8e3db; border-radius:4px; font-size:0.82rem; cursor:pointer; background:#fff; transition:all 0.2s; }
+    .page-btn:hover { border-color:#1a1714; }
+    .page-btn.active { background:#1a1714; color:#fff; border-color:#1a1714; }
+
+    /* TABS */
+    .tabs { display:flex; border-bottom:2px solid #e8e3db; margin-bottom:1.5rem; gap:0; }
+    .tab { padding:0.65rem 1.4rem; font-size:0.8rem; cursor:pointer; color:#9c9488; border-bottom:2px solid transparent; margin-bottom:-2px; transition:all 0.2s; letter-spacing:0.05em; }
+    .tab:hover { color:#1a1714; }
+    .tab.active { color:#1a1714; border-bottom-color:#1a1714; font-weight:500; }
+
+    /* NOTIFICATION DOT */
+    .notif-wrap { position:relative; display:inline-block; }
+    .notif-dot { position:absolute; top:-4px; right:-4px; width:10px; height:10px; background:#e05252; border-radius:50%; border:2px solid #f5f2ed; }
+    .notif-count { position:absolute; top:-6px; right:-8px; background:#e05252; color:#fff; font-size:0.6rem; font-weight:700; padding:0.1rem 0.3rem; border-radius:10px; min-width:16px; text-align:center; }
+
+    /* DIVIDER WITH TEXT */
+    .divider-text { display:flex; align-items:center; gap:1rem; color:#9c9488; font-size:0.78rem; margin:1.5rem 0; }
+    .divider-text::before,.divider-text::after { content:''; flex:1; height:1px; background:#e8e3db; }
+
+    /* SKELETON LOADER */
+    .skeleton { background:linear-gradient(90deg,#e8e3db 25%,#f0ece4 50%,#e8e3db 75%); background-size:200% 100%; animation:shimmer 1.4s infinite; border-radius:4px; }
+    @keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+
+    /* TIMELINE */
+    .timeline { position:relative; padding-left:2rem; }
+    .timeline::before { content:''; position:absolute; left:7px; top:0; bottom:0; width:2px; background:#e8e3db; }
+    .timeline-item { position:relative; margin-bottom:1.5rem; }
+    .timeline-item::before { content:''; position:absolute; left:-1.7rem; top:4px; width:10px; height:10px; border-radius:50%; background:#c8a97e; border:2px solid #fff; box-shadow:0 0 0 2px #c8a97e; }
+    .timeline-date { font-size:0.7rem; color:#9c9488; margin-bottom:0.2rem; }
+    .timeline-title { font-size:0.88rem; font-weight:500; }
+    .timeline-desc { font-size:0.8rem; color:#9c9488; }
+
+    /* PRODUCT LIST ROW */
+    .product-row { display:flex; align-items:center; gap:1rem; padding:0.8rem 1rem; background:#fff; border-radius:6px; margin-bottom:0.5rem; box-shadow:0 1px 4px rgba(0,0,0,0.05); }
+    .product-thumb { width:48px; height:48px; border-radius:6px; background:#e8e3db; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:1.2rem; }
+    .product-row-info { flex:1; }
+    .product-row-name { font-size:0.88rem; font-weight:500; }
+    .product-row-cat  { font-size:0.72rem; color:#9c9488; }
+    .product-row-price { font-weight:600; color:#c8a97e; }
+
+    /* COUPON */
+    .coupon { background:#fff; border:2px dashed #c8a97e; border-radius:8px; padding:1.2rem 1.5rem; display:flex; align-items:center; justify-content:space-between; }
+    .coupon-code { font-size:1.3rem; font-weight:700; letter-spacing:0.2em; color:#1a1714; }
+    .coupon-desc { font-size:0.78rem; color:#9c9488; }
+    .coupon-off  { font-size:2rem; font-weight:700; color:#c8a97e; }
+
+    /* CART ITEM */
+    .cart-item { display:flex; gap:1rem; align-items:center; padding:0.9rem; background:#fff; border-radius:6px; margin-bottom:0.5rem; box-shadow:0 1px 4px rgba(0,0,0,0.05); }
+    .cart-thumb { width:56px; height:56px; border-radius:6px; background:#e8e3db; flex-shrink:0; }
+    .cart-info { flex:1; }
+    .cart-name  { font-size:0.88rem; font-weight:500; }
+    .cart-meta  { font-size:0.75rem; color:#9c9488; }
+    .cart-qty   { display:flex; align-items:center; gap:0.5rem; font-size:0.85rem; }
+    .qty-btn    { width:26px; height:26px; border:1px solid #e8e3db; border-radius:4px; background:#fff; cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:1rem; }
+
+    /* COLORS */
+    .color-grid { display:flex; gap:0.8rem; flex-wrap:wrap; }
+    .color-swatch { text-align:center; }
+    .color-box { width:72px; height:52px; border-radius:6px; margin-bottom:0.3rem; border:1px solid rgba(0,0,0,0.07); }
+    .color-name { font-size:0.65rem; color:#9c9488; }
+    .color-hex  { font-size:0.7rem; font-weight:500; }
+
+    /* SHADOW */
+    .shadow-demo { display:flex; gap:1.2rem; flex-wrap:wrap; }
+    .shadow-box { width:90px; height:60px; background:#fff; border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:0.72rem; color:#9c9488; }
+    .shadow-sm { box-shadow:0 1px 4px rgba(0,0,0,0.06); }
+    .shadow-md { box-shadow:0 4px 16px rgba(0,0,0,0.1); }
+    .shadow-lg { box-shadow:0 8px 32px rgba(0,0,0,0.14); }
+    .shadow-xl { box-shadow:0 16px 48px rgba(0,0,0,0.18); }
+
+  </style>
+</head>
+<body>
+
+  <h1>🗂 Full Fake Data Sheet — Maison</h1>
+  <p>Complete UI component library with fake data for your practical project.</p>
+
+  <!-- COLORS -->
+  <h2>🎨 Color Palette</h2>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-box" style="background:#1A1714;"></div><div class="color-name">Ink</div><div class="color-hex">#1A1714</div></div>
+    <div class="color-swatch"><div class="color-box" style="background:#F5F2ED;border:1px solid #ddd;"></div><div class="color-name">Cream</div><div class="color-hex">#F5F2ED</div></div>
+    <div class="color-swatch"><div class="color-box" style="background:#9C9488;"></div><div class="color-name">Stone</div><div class="color-hex">#9C9488</div></div>
+    <div class="color-swatch"><div class="color-box" style="background:#C8A97E;"></div><div class="color-name">Warm</div><div class="color-hex">#C8A97E</div></div>
+    <div class="color-swatch"><div class="color-box" style="background:#E8E3DB;"></div><div class="color-name">Soft</div><div class="color-hex">#E8E3DB</div></div>
+    <div class="color-swatch"><div class="color-box" style="background:#2d6a2d;"></div><div class="color-name">Success</div><div class="color-hex">#2D6A2D</div></div>
+    <div class="color-swatch"><div class="color-box" style="background:#e05252;"></div><div class="color-name">Danger</div><div class="color-hex">#E05252</div></div>
+    <div class="color-swatch"><div class="color-box" style="background:#3a42a0;"></div><div class="color-name">Info</div><div class="color-hex">#3A42A0</div></div>
+    <div class="color-swatch"><div class="color-box" style="background:#7c3aed;"></div><div class="color-name">Purple</div><div class="color-hex">#7C3AED</div></div>
+    <div class="color-swatch"><div class="color-box" style="background:#db2777;"></div><div class="color-name">Pink</div><div class="color-hex">#DB2777</div></div>
+    <div class="color-swatch"><div class="color-box" style="background:#0d7a6a;"></div><div class="color-name">Teal</div><div class="color-hex">#0D7A6A</div></div>
+    <div class="color-swatch"><div class="color-box" style="background:#e65100;"></div><div class="color-name">Orange</div><div class="color-hex">#E65100</div></div>
+  </div>
+
+  <hr class="divider"/>
+
+  <!-- BUTTONS -->
+  <h2>🔘 Buttons — All Variants</h2>
+  <div style="display:flex;gap:0.7rem;flex-wrap:wrap;margin-bottom:0.8rem;">
+    <button class="btn btn-primary">Primary</button>
+    <button class="btn btn-secondary">Secondary</button>
+    <button class="btn btn-warm">Warm</button>
+    <button class="btn btn-danger">Danger</button>
+    <button class="btn btn-success">Success</button>
+    <button class="btn btn-ghost">Ghost</button>
+    <button class="btn btn-purple">Purple</button>
+    <button class="btn btn-pink">Pink</button>
+  </div>
+  <div style="display:flex;gap:0.7rem;flex-wrap:wrap;margin-bottom:0.8rem;">
+    <button class="btn btn-primary btn-sm">Small</button>
+    <button class="btn btn-primary">Default</button>
+    <button class="btn btn-primary btn-lg">Large</button>
+    <button class="btn btn-warm btn-rounded">Rounded</button>
+    <button class="btn btn-primary btn-icon">🛒 Add to Cart</button>
+    <button class="btn btn-danger btn-icon">🗑 Delete</button>
+  </div>
+
+  <hr class="divider"/>
+
+  <!-- BADGES -->
+  <h2>🏷 Badges — All Colors</h2>
+  <span class="badge badge-green">Delivered</span>
+  <span class="badge badge-gold">Bestseller</span>
+  <span class="badge badge-blue">Handmade</span>
+  <span class="badge badge-red">Out of Stock</span>
+  <span class="badge badge-gray">Draft</span>
+  <span class="badge badge-dark">New</span>
+  <span class="badge badge-purple">Premium</span>
+  <span class="badge badge-pink">Sale</span>
+  <span class="badge badge-teal">Eco</span>
+  <span class="badge badge-orange">Limited</span>
+
+  <hr class="divider"/>
+
+  <!-- STATUS PILLS -->
+  <h2>🔵 Order Statuses</h2>
+  <div style="display:flex;gap:1.5rem;flex-wrap:wrap;">
+    <span class="status status-delivered">Delivered</span>
+    <span class="status status-shipped">Shipped</span>
+    <span class="status status-processing">Processing</span>
+    <span class="status status-cancelled">Cancelled</span>
+    <span class="status status-refunded">Refunded</span>
+    <span class="status status-pending">Pending</span>
+  </div>
+
+  <hr class="divider"/>
+
+  <!-- TABS -->
+  <h2>📑 Tabs</h2>
+  <div class="tabs">
+    <div class="tab active">All Orders</div>
+    <div class="tab">Delivered</div>
+    <div class="tab">Shipped</div>
+    <div class="tab">Processing</div>
+    <div class="tab">Cancelled</div>
+  </div>
+
+  <!-- BREADCRUMB -->
+  <h2>🧭 Breadcrumb</h2>
+  <div class="breadcrumb">
+    <a>Home</a> / <a>Products</a> / <a>Textiles</a> / <span>Linen Throw No. 3</span>
+  </div>
+
+  <!-- PAGINATION -->
+  <h2>📄 Pagination</h2>
+  <div class="pagination">
+    <div class="page-btn">‹</div>
+    <div class="page-btn active">1</div>
+    <div class="page-btn">2</div>
+    <div class="page-btn">3</div>
+    <div class="page-btn">...</div>
+    <div class="page-btn">8</div>
+    <div class="page-btn">›</div>
+  </div>
+
+  <hr class="divider"/>
+
+  <!-- STAT BOXES -->
+  <h2>📊 Stat Boxes</h2>
+  <div class="grid-4">
+    <div class="stat-box"><p class="stat-label">Revenue</p><p class="stat-value">$12,480</p><p class="stat-sub"><span class="stat-up">↑ 18%</span> vs last month</p></div>
+    <div class="stat-box"><p class="stat-label">Orders</p><p class="stat-value">148</p><p class="stat-sub"><span class="stat-up">↑ 11%</span> vs last month</p></div>
+    <div class="stat-box"><p class="stat-label">Customers</p><p class="stat-value">2,340</p><p class="stat-sub"><span class="stat-down">↓ 3%</span> vs last month</p></div>
+    <div class="stat-box"><p class="stat-label">Avg Order</p><p class="stat-value">$193</p><p class="stat-sub"><span class="stat-up">↑ 5%</span> vs last month</p></div>
+    <div class="stat-box"><p class="stat-label">Refunds</p><p class="stat-value">6</p><p class="stat-sub"><span class="stat-down">↓ 2 this week</span></p></div>
+    <div class="stat-box"><p class="stat-label">Products</p><p class="stat-value">48</p><p class="stat-sub">8 new this season</p></div>
+    <div class="stat-box"><p class="stat-label">Reviews</p><p class="stat-value">312</p><p class="stat-sub"><span class="stat-up">Avg 4.7 ★</span></p></div>
+    <div class="stat-box"><p class="stat-label">Wishlist</p><p class="stat-value">890</p><p class="stat-sub">Across all products</p></div>
+  </div>
+
+  <hr class="divider"/>
+
+  <!-- PROGRESS BARS -->
+  <h2>📈 Progress Bars</h2>
+  <div class="progress-wrap"><div class="progress-label"><span>Textiles Sales</span><span>75%</span></div><div class="progress-bar"><div class="progress-fill fill-dark" style="width:75%;"></div></div></div>
+  <div class="progress-wrap"><div class="progress-label"><span>Ceramics Sales</span><span>58%</span></div><div class="progress-bar"><div class="progress-fill fill-warm" style="width:58%;"></div></div></div>
+  <div class="progress-wrap"><div class="progress-label"><span>Home Goods</span><span>42%</span></div><div class="progress-bar"><div class="progress-fill fill-green" style="width:42%;"></div></div></div>
+  <div class="progress-wrap"><div class="progress-label"><span>Lighting</span><span>28%</span></div><div class="progress-bar"><div class="progress-fill fill-blue" style="width:28%;"></div></div></div>
+  <div class="progress-wrap"><div class="progress-label"><span>Returns Rate</span><span>8%</span></div><div class="progress-bar"><div class="progress-fill fill-red" style="width:8%;"></div></div></div>
+  <div class="progress-wrap"><div class="progress-label"><span>Stock Filled</span><span>90%</span></div><div class="progress-bar"><div class="progress-fill fill-purple" style="width:90%;"></div></div></div>
+
+  <hr class="divider"/>
+
+  <!-- ALERTS -->
+  <h2>⚠️ Alerts</h2>
+  <div class="alert alert-success">✅ Order ORD-001 delivered successfully to Jane Doe.</div>
+  <div class="alert alert-warning">⚠️ Walnut Tray stock is critically low — only 5 units remaining.</div>
+  <div class="alert alert-error">❌ Payment failed for ORD-003. Card declined. Please retry.</div>
+  <div class="alert alert-info">ℹ️ Spring 2026 collection launches April 1st. Prepare inventory.</div>
+  <div class="alert alert-purple">🚀 New feature: Wishlist sharing is now live for all users.</div>
+
+  <hr class="divider"/>
+
+  <!-- CARDS -->
+  <h2>🃏 Product Cards</h2>
+  <div class="grid-4">
+    <div class="card"><p class="card-sub">Textiles</p><p class="card-title">Linen Throw No. 3</p><div style="margin:0.5rem 0;"><span class="stars">★★★★★</span></div><p class="card-price">$148</p><div style="margin-top:0.9rem;display:flex;gap:0.5rem;"><button class="btn btn-primary btn-sm">Add to Cart</button><button class="btn btn-ghost btn-sm">♡</button></div></div>
+    <div class="card"><p class="card-sub">Ceramics</p><p class="card-title">Stoneware Vessel</p><div style="margin:0.5rem 0;"><span class="stars">★★★★</span><span class="stars-gray">★</span></div><p class="card-price">$89</p><div style="margin-top:0.9rem;display:flex;gap:0.5rem;"><button class="btn btn-primary btn-sm">Add to Cart</button><button class="btn btn-ghost btn-sm">♡</button></div></div>
+    <div class="card"><p class="card-sub">Home</p><p class="card-title">Walnut Tray</p><div style="margin:0.5rem 0;"><span class="stars">★★★★★</span></div><p class="card-price">$125</p><div style="margin-top:0.9rem;display:flex;gap:0.5rem;"><button class="btn btn-primary btn-sm">Add to Cart</button><button class="btn btn-ghost btn-sm">♡</button></div></div>
+    <div class="card"><p class="card-sub">Lighting</p><p class="card-title">Brass Candle Holder</p><div style="margin:0.5rem 0;"><span class="stars">★★★★</span><span class="stars-gray">★</span></div><p class="card-price">$64</p><div style="margin-top:0.9rem;display:flex;gap:0.5rem;"><button class="btn btn-primary btn-sm">Add to Cart</button><button class="btn btn-ghost btn-sm">♡</button></div></div>
+  </div>
+
+  <hr class="divider"/>
+
+  <!-- PRODUCT LIST ROWS -->
+  <h2>📦 Product List Rows</h2>
+  <div class="product-row"><div class="product-thumb">🧶</div><div class="product-row-info"><p class="product-row-name">Linen Throw No. 3</p><p class="product-row-cat">Textiles · Stock: 12</p></div><span class="badge badge-gold">Bestseller</span><p class="product-row-price">$148</p><button class="btn btn-primary btn-sm">Edit</button></div>
+  <div class="product-row"><div class="product-thumb">🏺</div><div class="product-row-info"><p class="product-row-name">Stoneware Vessel</p><p class="product-row-cat">Ceramics · Stock: 7</p></div><span class="badge badge-teal">Eco</span><p class="product-row-price">$89</p><button class="btn btn-primary btn-sm">Edit</button></div>
+  <div class="product-row"><div class="product-thumb">🪵</div><div class="product-row-info"><p class="product-row-name">Walnut Tray</p><p class="product-row-cat">Home · Stock: 5</p></div><span class="badge badge-red">Low Stock</span><p class="product-row-price">$125</p><button class="btn btn-primary btn-sm">Edit</button></div>
+  <div class="product-row"><div class="product-thumb">🕯</div><div class="product-row-info"><p class="product-row-name">Brass Candle Holder</p><p class="product-row-cat">Lighting · Stock: 15</p></div><span class="badge badge-dark">New</span><p class="product-row-price">$64</p><button class="btn btn-primary btn-sm">Edit</button></div>
+
+  <hr class="divider"/>
+
+  <!-- CART ITEMS -->
+  <h2>🛒 Cart Items</h2>
+  <div class="cart-item"><div class="cart-thumb"></div><div class="cart-info"><p class="cart-name">Linen Throw No. 3</p><p class="cart-meta">Color: Natural · Size: 130x170cm</p></div><div class="cart-qty"><div class="qty-btn">−</div><span>1</span><div class="qty-btn">+</div></div><p style="font-weight:600;color:#c8a97e;min-width:50px;text-align:right;">$148</p><button class="btn btn-danger btn-sm">✕</button></div>
+  <div class="cart-item"><div class="cart-thumb"></div><div class="cart-info"><p class="cart-name">Stoneware Vessel</p><p class="cart-meta">Finish: Matte · Height: 22cm</p></div><div class="cart-qty"><div class="qty-btn">−</div><span>2</span><div class="qty-btn">+</div></div><p style="font-weight:600;color:#c8a97e;min-width:50px;text-align:right;">$178</p><button class="btn btn-danger btn-sm">✕</button></div>
+
+  <hr class="divider"/>
+
+  <!-- COUPON -->
+  <h2>🎟 Coupons</h2>
+  <div class="grid-2">
+    <div class="coupon"><div><p class="coupon-code">SPRING20</p><p class="coupon-desc">20% off all textiles · Expires Apr 30</p></div><div class="coupon-off">20%</div></div>
+    <div class="coupon" style="border-color:#2d6a2d;"><div><p class="coupon-code" style="color:#2d6a2d;">FREESHIP</p><p class="coupon-desc">Free shipping on orders over $100</p></div><div class="coupon-off" style="color:#2d6a2d;">FREE</div></div>
+  </div>
+
+  <hr class="divider"/>
+
+  <!-- USERS -->
+  <h2>👤 Users</h2>
+  <div class="user-row"><div class="avatar avatar-dark">JD</div><div class="user-info"><p class="name">Jane Doe</p><p class="email">jane@example.com · San Francisco, CA</p></div><span class="badge badge-gold" style="margin-left:auto;">5 orders</span><button class="btn btn-ghost btn-sm">View</button></div>
+  <div class="user-row"><div class="avatar avatar-warm">LC</div><div class="user-info"><p class="name">Liam Chen</p><p class="email">liam@example.com · New York, NY</p></div><span class="badge badge-green" style="margin-left:auto;">12 orders</span><button class="btn btn-ghost btn-sm">View</button></div>
+  <div class="user-row"><div class="avatar avatar-stone">AO</div><div class="user-info"><p class="name">Amara Osei</p><p class="email">amara@example.com · London, UK</p></div><span class="badge badge-gray" style="margin-left:auto;">2 orders</span><button class="btn btn-ghost btn-sm">View</button></div>
+  <div class="user-row"><div class="avatar avatar-blue">SR</div><div class="user-info"><p class="name">Sofia Ruiz</p><p class="email">sofia@example.com · Madrid, Spain</p></div><span class="badge badge-purple" style="margin-left:auto;">8 orders</span><button class="btn btn-ghost btn-sm">View</button></div>
+  <div class="user-row"><div class="avatar avatar-green">MK</div><div class="user-info"><p class="name">Marco Kim</p><p class="email">marco@example.com · Seoul, Korea</p></div><span class="badge badge-pink" style="margin-left:auto;">3 orders</span><button class="btn btn-ghost btn-sm">View</button></div>
+
+  <hr class="divider"/>
+
+  <!-- TIMELINE -->
+  <h2>🕐 Order Timeline</h2>
+  <div class="timeline">
+    <div class="timeline-item"><p class="timeline-date">Mar 19, 2026 · 3:45 PM</p><p class="timeline-title">Order Delivered</p><p class="timeline-desc">Package received by Jane Doe at San Francisco, CA.</p></div>
+    <div class="timeline-item"><p class="timeline-date">Mar 17, 2026 · 9:10 AM</p><p class="timeline-title">Out for Delivery</p><p class="timeline-desc">Driver assigned. Expected delivery by 6 PM.</p></div>
+    <div class="timeline-item"><p class="timeline-date">Mar 15, 2026 · 11:00 AM</p><p class="timeline-title">Shipped</p><p class="timeline-desc">Package dispatched from warehouse. Tracking: TRK9284710.</p></div>
+    <div class="timeline-item"><p class="timeline-date">Mar 14, 2026 · 2:30 PM</p><p class="timeline-title">Payment Confirmed</p><p class="timeline-desc">$237 charged to Visa ending 4242.</p></div>
+    <div class="timeline-item"><p class="timeline-date">Mar 14, 2026 · 2:28 PM</p><p class="timeline-title">Order Placed</p><p class="timeline-desc">ORD-001 created for Linen Throw + Brass Candle Holder.</p></div>
+  </div>
+
+  <hr class="divider"/>
+
+  <!-- TABLE -->
+  <h2>📋 Orders Table</h2>
+  <table>
+    <thead><tr><th>Order ID</th><th>Customer</th><th>Date</th><th>Items</th><th>Status</th><th>Total</th><th>Action</th></tr></thead>
+    <tbody>
+      <tr><td>ORD-001</td><td><div style="display:flex;align-items:center;gap:0.5rem;"><div class="avatar avatar-dark avatar-sm">JD</div>Jane Doe</div></td><td>Mar 10, 2026</td><td>2 items</td><td><span class="status status-delivered">Delivered</span></td><td>$237</td><td><button class="btn btn-ghost btn-sm">View</button></td></tr>
+      <tr><td>ORD-002</td><td><div style="display:flex;align-items:center;gap:0.5rem;"><div class="avatar avatar-warm avatar-sm">LC</div>Liam Chen</div></td><td>Mar 14, 2026</td><td>1 item</td><td><span class="status status-shipped">Shipped</span></td><td>$110</td><td><button class="btn btn-ghost btn-sm">View</button></td></tr>
+      <tr><td>ORD-003</td><td><div style="display:flex;align-items:center;gap:0.5rem;"><div class="avatar avatar-stone avatar-sm">AO</div>Amara Osei</div></td><td>Mar 18, 2026</td><td>2 items</td><td><span class="status status-processing">Processing</span></td><td>$158</td><td><button class="btn btn-ghost btn-sm">View</button></td></tr>
+      <tr><td>ORD-004</td><td><div style="display:flex;align-items:center;gap:0.5rem;"><div class="avatar avatar-blue avatar-sm">SR</div>Sofia Ruiz</div></td><td>Mar 19, 2026</td><td>3 items</td><td><span class="status status-delivered">Delivered</span></td><td>$269</td><td><button class="btn btn-ghost btn-sm">View</button></td></tr>
+      <tr><td>ORD-005</td><td><div style="display:flex;align-items:center;gap:0.5rem;"><div class="avatar avatar-green avatar-sm">MK</div>Marco Kim</div></td><td>Mar 20, 2026</td><td>1 item</td><td><span class="status status-pending">Pending</span></td><td>$64</td><td><button class="btn btn-ghost btn-sm">View</button></td></tr>
+    </tbody>
+  </table>
+
+  <hr class="divider"/>
+
+  <!-- FORMS -->
+  <h2>📝 Form Inputs</h2>
+  <div class="grid-2">
+    <div>
+      <div class="form-group"><label>Full Name</label><input type="text" placeholder="Jane Doe"/></div>
+      <div class="form-group"><label>Email</label><input type="email" placeholder="jane@example.com"/></div>
+      <div class="form-group"><label>Phone</label><input type="tel" placeholder="+1 415 555 0192"/></div>
+      <div class="form-group"><label>Category</label>
+        <select><option>Textiles</option><option>Ceramics</option><option>Home</option><option>Lighting</option></select>
+      </div>
+      <div class="form-group"><label>Message</label><textarea placeholder="Write your message…"></textarea></div>
+    </div>
+    <div>
+      <div class="form-group"><label>Error Input</label><input class="input-error" type="text" value="bad@"/><p class="form-hint error">Enter a valid email address.</p></div>
+      <div class="form-group"><label>Success Input</label><input class="input-success" type="text" value="jane@example.com"/><p class="form-hint success">Looks great!</p></div>
+      <div class="form-group"><label>Disabled Input</label><input class="input-disabled" type="text" value="Read only value" disabled/></div>
+      <div class="form-group"><label>Checkboxes</label>
+        <div class="checkbox-group"><input type="checkbox" checked/> Subscribe to newsletter</div>
+        <div class="checkbox-group"><input type="checkbox"/> Accept terms & conditions</div>
+        <div class="checkbox-group"><input type="checkbox" checked/> Receive order updates</div>
+      </div>
+      <div class="form-group"><label>Radio Buttons</label>
+        <div class="radio-group"><input type="radio" name="ship" checked/> Standard (Free)</div>
+        <div class="radio-group"><input type="radio" name="ship"/> Express ($12)</div>
+        <div class="radio-group"><input type="radio" name="ship"/> Overnight ($28)</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider"/>
+
+  <!-- TOGGLES -->
+  <h2>🔁 Toggles</h2>
+  <div class="toggle-wrap"><label class="toggle"><input type="checkbox" checked/><span class="toggle-slider"></span></label> Email notifications ON</div>
+  <div class="toggle-wrap"><label class="toggle"><input type="checkbox"/><span class="toggle-slider"></span></label> SMS notifications OFF</div>
+  <div class="toggle-wrap"><label class="toggle"><input type="checkbox" checked/><span class="toggle-slider"></span></label> Dark mode ON</div>
+
+  <hr class="divider"/>
+
+  <!-- TAGS -->
+  <h2>🏷 Filter Tags</h2>
+  <div>
+    <span class="tag active">All</span>
+    <span class="tag">New Arrivals</span>
+    <span class="tag">Bestsellers</span>
+    <span class="tag">Textiles</span>
+    <span class="tag">Ceramics</span>
+    <span class="tag">Home</span>
+    <span class="tag">Lighting</span>
+    <span class="tag">Sale</span>
+    <span class="tag">Eco</span>
+    <span class="tag">Handmade</span>
+  </div>
+
+  <hr class="divider"/>
+
+  <!-- TOOLTIPS -->
+  <h2>💬 Tooltips</h2>
+  <div style="display:flex;gap:1.5rem;flex-wrap:wrap;">
+    <div class="tooltip-wrap"><button class="btn btn-primary">Hover me <span class="tooltip">Primary action</span></button></div>
+    <div class="tooltip-wrap"><button class="btn btn-warm">Discount <span class="tooltip">Apply coupon SPRING20</span></button></div>
+    <div class="tooltip-wrap"><button class="btn btn-ghost">Info <span class="tooltip">Stock updates daily</span></button></div>
+  </div>
+
+  <hr class="divider"/>
+
+  <!-- SKELETON LOADERS -->
+  <h2>💀 Skeleton Loaders</h2>
+  <div class="grid-3" style="margin-bottom:1rem;">
+    <div class="card"><div class="skeleton" style="height:160px;margin-bottom:1rem;border-radius:6px;"></div><div class="skeleton" style="height:14px;width:60%;margin-bottom:0.5rem;"></div><div class="skeleton" style="height:12px;width:40%;"></div></div>
+    <div class="card"><div class="skeleton" style="height:160px;margin-bottom:1rem;border-radius:6px;"></div><div class="skeleton" style="height:14px;width:70%;margin-bottom:0.5rem;"></div><div class="skeleton" style="height:12px;width:35%;"></div></div>
+    <div class="card"><div class="skeleton" style="height:160px;margin-bottom:1rem;border-radius:6px;"></div><div class="skeleton" style="height:14px;width:55%;margin-bottom:0.5rem;"></div><div class="skeleton" style="height:12px;width:45%;"></div></div>
+  </div>
+
+  <hr class="divider"/>
+
+  <!-- SHADOWS -->
+  <h2>🌑 Shadow Levels</h2>
+  <div class="shadow-demo">
+    <div class="shadow-box shadow-sm">sm</div>
+    <div class="shadow-box shadow-md">md</div>
+    <div class="shadow-box shadow-lg">lg</div>
+    <div class="shadow-box shadow-xl">xl</div>
+  </div>
+
+  <hr class="divider"/>
+
+  <!-- DIVIDER VARIANTS -->
+  <h2>➖ Divider Variants</h2>
+  <hr class="divider"/>
+  <div class="divider-text">or continue with</div>
+  <hr style="border:none;border-top:2px dashed #e8e3db;margin:1rem 0;"/>
+  <hr style="border:none;border-top:2px dotted #c8a97e;margin:1rem 0;"/>
+
+</body>
+</html>
