@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Fake Data - Maison</title>
+  <style>
+    body { font-family: sans-serif; background: #f5f2ed; color: #1a1714; padding: 2rem; }
+    h1 { font-size: 2rem; margin-bottom: 0.5rem; }
+    h2 { font-size: 1.2rem; margin: 2rem 0 0.8rem; color: #9c9488; border-bottom: 1px solid #ddd; padding-bottom: 0.4rem; }
+    table { width: 100%; border-collapse: collapse; background: #fff; margin-bottom: 1rem; font-size: 0.85rem; }
+    th { background: #1a1714; color: #fff; padding: 0.6rem 1rem; text-align: left; }
+    td { padding: 0.6rem 1rem; border-bottom: 1px solid #eee; }
+    tr:hover td { background: #faf9f7; }
+    .badge { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.7rem; margin-right: 0.3rem; }
+    .badge-new { background: #e8f4e8; color: #2d6a2d; }
+    .badge-bestseller { background: #fdf3e3; color: #a0620a; }
+    .badge-handmade { background: #eef0fb; color: #3a42a0; }
+    .status-delivered { color: #2d6a2d; font-weight: 500; }
+    .status-shipped { color: #a0620a; font-weight: 500; }
+    .status-processing { color: #3a42a0; font-weight: 500; }
+    .stars { color: #c8a97e; }
+  </style>
+</head>
+<body>
+
+  <h1>🗂 Maison — Fake Data</h1>
+  <p style="color:#9c9488;">All fake data for practice use only.</p>
+
+  <!-- PRODUCTS -->
+  <h2>📦 Products</h2>
+  <table>
+    <thead>
+      <tr><th>ID</th><th>Name</th><th>Category</th><th>Price</th><th>Stock</th><th>Rating</th><th>Reviews</th><th>Tags</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>1</td><td>Linen Throw No. 3</td><td>Textiles</td><td>$148</td><td>12</td><td><span class="stars">★★★★★</span> 4.8</td><td>34</td><td><span class="badge badge-new">new</span><span class="badge badge-bestseller">bestseller</span></td></tr>
+      <tr><td>2</td><td>Stoneware Vessel</td><td>Ceramics</td><td>$89</td><td>7</td><td><span class="stars">★★★★★</span> 4.6</td><td>21</td><td><span class="badge badge-handmade">handmade</span></td></tr>
+      <tr><td>3</td><td>Walnut Tray</td><td>Home</td><td>$125</td><td>5</td><td><span class="stars">★★★★★</span> 4.9</td><td>58</td><td><span class="badge badge-bestseller">bestseller</span></td></tr>
+      <tr><td>4</td><td>Wool Cushion</td><td>Textiles</td><td>$72</td><td>20</td><td><span class="stars">★★★★★</span> 4.5</td><td>17</td><td><span class="badge badge-new">new</span></td></tr>
+      <tr><td>5</td><td>Clay Plate Set</td><td>Ceramics</td><td>$110</td><td>9</td><td><span class="stars">★★★★★</span> 4.7</td><td>43</td><td><span class="badge badge-handmade">handmade</span><span class="badge badge-bestseller">bestseller</span></td></tr>
+      <tr><td>6</td><td>Brass Candle Holder</td><td>Lighting</td><td>$64</td><td>15</td><td><span class="stars">★★★★</span> 4.4</td><td>29</td><td>—</td></tr>
+      <tr><td>7</td><td>Linen Napkins (4)</td><td>Textiles</td><td>$48</td><td>30</td><td><span class="stars">★★★★</span> 4.3</td><td>11</td><td><span class="badge badge-new">new</span></td></tr>
+      <tr><td>8</td><td>Stone Soap Dish</td><td>Home</td><td>$38</td><td>18</td><td><span class="stars">★★★★★</span> 4.6</td><td>25</td><td>—</td></tr>
+    </tbody>
+  </table>
+
+  <!-- CATEGORIES -->
+  <h2>🗃 Categories</h2>
+  <table>
+    <thead>
+      <tr><th>ID</th><th>Label</th><th>Product Count</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>textiles</td><td>Textiles</td><td>3</td></tr>
+      <tr><td>ceramics</td><td>Ceramics</td><td>2</td></tr>
+      <tr><td>home</td><td>Home</td><td>2</td></tr>
+      <tr><td>lighting</td><td>Lighting</td><td>1</td></tr>
+    </tbody>
+  </table>
+
+  <!-- USERS -->
+  <h2>👤 Users</h2>
+  <table>
+    <thead>
+      <tr><th>ID</th><th>Name</th><th>Email</th><th>Location</th><th>Joined</th><th>Orders</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>101</td><td>Jane Doe</td><td>jane@example.com</td><td>San Francisco, CA</td><td>2024-03-15</td><td>5</td></tr>
+      <tr><td>102</td><td>Liam Chen</td><td>liam@example.com</td><td>New York, NY</td><td>2023-11-02</td><td>12</td></tr>
+      <tr><td>103</td><td>Amara Osei</td><td>amara@example.com</td><td>London, UK</td><td>2025-01-20</td><td>2</td></tr>
+      <tr><td>104</td><td>Sofia Ruiz</td><td>sofia@example.com</td><td>Madrid, Spain</td><td>2024-07-08</td><td>8</td></tr>
+    </tbody>
+  </table>
+
+  <!-- ORDERS -->
+  <h2>🛒 Orders</h2>
+  <table>
+    <thead>
+      <tr><th>Order ID</th><th>User ID</th><th>Date</th><th>Status</th><th>Total</th><th>Items</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>ORD-001</td><td>101</td><td>2026-03-10</td><td><span class="status-delivered">Delivered</span></td><td>$237</td><td>Product #1 x1, Product #6 x1</td></tr>
+      <tr><td>ORD-002</td><td>102</td><td>2026-03-14</td><td><span class="status-shipped">Shipped</span></td><td>$110</td><td>Product #5 x1</td></tr>
+      <tr><td>ORD-003</td><td>103</td><td>2026-03-18</td><td><span class="status-processing">Processing</span></td><td>$158</td><td>Product #3 x1, Product #8 x1</td></tr>
+      <tr><td>ORD-004</td><td>104</td><td>2026-03-19</td><td><span class="status-delivered">Delivered</span></td><td>$269</td><td>Product #2 x1, Product #4 x1, Product #7 x1</td></tr>
+    </tbody>
+  </table>
+
+  <!-- REVIEWS -->
+  <h2>⭐ Reviews</h2>
+  <table>
+    <thead>
+      <tr><th>ID</th><th>Product ID</th><th>User ID</th><th>Rating</th><th>Comment</th><th>Date</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>1</td><td>3</td><td>101</td><td><span class="stars">★★★★★</span> 5</td><td>Absolutely beautiful. Looks even better in person.</td><td>2026-02-28</td></tr>
+      <tr><td>2</td><td>1</td><td>104</td><td><span class="stars">★★★★★</span> 5</td><td>Super soft and drapes perfectly. Worth every penny.</td><td>2026-03-01</td></tr>
+      <tr><td>3</td><td>5</td><td>102</td><td><span class="stars">★★★★</span> 4</td><td>Great quality, slight variation in glaze which adds character.</td><td>2026-03-15</td></tr>
+      <tr><td>4</td><td>2</td><td>103</td><td><span class="stars">★★★★★</span> 5</td><td>Minimalist and perfect. Ships well packed too.</td><td>2026-03-19</td></tr>
+    </tbody>
+  </table>
+
+  <!-- SITE STATS -->
+  <h2>📊 Site Stats</h2>
+  <table>
+    <thead>
+      <tr><th>Metric</th><th>Value</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Total Products</td><td>8</td></tr>
+      <tr><td>Total Users</td><td>4</td></tr>
+      <tr><td>Total Orders</td><td>4</td></tr>
+      <tr><td>Total Revenue</td><td>$774</td></tr>
+      <tr><td>Avg Order Value</td><td>$193.50</td></tr>
+    </tbody>
+  </table>
+
+</body>
+</html>

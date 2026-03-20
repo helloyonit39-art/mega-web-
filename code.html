@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MAISON — Modern Retail</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #F5F2ED;
+      --ink: #1A1714;
+      --stone: #9C9488;
+      --warm: #C8A97E;
+      --soft: #E8E3DB;
+      --white: #FDFCFA;
+      --font-display: 'Cormorant Garamond', serif;
+      --font-body: 'DM Sans', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--cream);
+      color: var(--ink);
+      font-family: var(--font-body);
+      font-weight: 300;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* PAGE SYSTEM */
+    .page { display: none; min-height: 100vh; }
+    .page.active { display: block; animation: fadeIn 0.5s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.4rem 3rem;
+      background: var(--cream);
+      border-bottom: 1px solid var(--soft);
+    }
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      cursor: pointer;
+      color: var(--ink);
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.78rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--stone);
+      text-decoration: none;
+      cursor: pointer;
+      transition: color 0.2s;
+      font-weight: 400;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--ink); }
+
+    /* HERO */
+    .hero {
+      padding-top: 80px;
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+    .hero-text {
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 6rem 4rem 6rem 5rem;
+    }
+    .hero-eyebrow {
+      font-size: 0.72rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--warm);
+      margin-bottom: 1.5rem;
+      font-weight: 400;
+    }
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(3.5rem, 6vw, 6rem);
+      font-weight: 300;
+      line-height: 1.05;
+      margin-bottom: 1.8rem;
+      color: var(--ink);
+    }
+    .hero-title em { font-style: italic; color: var(--warm); }
+    .hero-sub {
+      font-size: 0.92rem;
+      color: var(--stone);
+      max-width: 380px;
+      margin-bottom: 3rem;
+      line-height: 1.8;
+    }
+    .btn {
+      display: inline-block;
+      padding: 0.9rem 2.4rem;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: all 0.25s;
+      font-family: var(--font-body);
+    }
+    .btn-dark {
+      background: var(--ink);
+      color: var(--cream);
+    }
+    .btn-dark:hover { background: #333; transform: translateY(-1px); }
+    .btn-outline {
+      background: transparent;
+      color: var(--ink);
+      border: 1px solid var(--ink);
+      margin-left: 1rem;
+    }
+    .btn-outline:hover { background: var(--ink); color: var(--cream); }
+
+    .hero-visual {
+      position: relative;
+      background: var(--soft);
+      overflow: hidden;
+    }
+    .hero-visual-inner {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .hero-shape {
+      width: 60%;
+      aspect-ratio: 3/4;
+      background: linear-gradient(145deg, var(--warm) 0%, #A8845A 100%);
+      border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+      opacity: 0.25;
+      position: absolute;
+      top: 10%; left: 15%;
+      animation: float 7s ease-in-out infinite;
+    }
+    .hero-label {
+      position: absolute; bottom: 2.5rem; left: 2.5rem;
+      font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--stone); writing-mode: vertical-rl;
+    }
+    .hero-card {
+      background: var(--white);
+      padding: 1.5rem 2rem;
+      position: absolute;
+      bottom: 3rem; right: 2.5rem;
+      width: 180px;
+      box-shadow: 0 8px 40px rgba(26,23,20,0.08);
+    }
+    .hero-card-label { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--stone); margin-bottom: 0.4rem; }
+    .hero-card-val { font-family: var(--font-display); font-size: 2rem; font-weight: 300; }
+    .hero-card-sub { font-size: 0.72rem; color: var(--stone); }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(-2deg); }
+      50% { transform: translateY(-20px) rotate(2deg); }
+    }
+
+    /* MARQUEE */
+    .marquee-wrap {
+      overflow: hidden;
+      border-top: 1px solid var(--soft);
+      border-bottom: 1px solid var(--soft);
+      padding: 1rem 0;
+      background: var(--white);
+    }
+    .marquee-track {
+      display: flex; gap: 3rem;
+      animation: marquee 18s linear infinite;
+      white-space: nowrap;
+    }
+    .marquee-track span {
+      font-size: 0.7rem; letter-spacing: 0.3em;
+      text-transform: uppercase; color: var(--stone);
+      flex-shrink: 0;
+    }
+    .marquee-track span.dot { color: var(--warm); font-size: 1rem; }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* FEATURED PRODUCTS */
+    .section { padding: 6rem 5rem; }
+    .section-header {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      margin-bottom: 3.5rem;
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.2rem, 4vw, 3.5rem);
+      font-weight: 300;
+      line-height: 1.1;
+    }
+    .section-title em { font-style: italic; }
+    .section-link {
+      font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--stone); text-decoration: none; cursor: pointer;
+      border-bottom: 1px solid var(--soft); padding-bottom: 0.2rem;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .section-link:hover { color: var(--ink); border-color: var(--ink); }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .product-card {
+      cursor: pointer;
+    }
+    .product-img {
+      aspect-ratio: 3/4;
+      background: var(--soft);
+      margin-bottom: 1rem;
+      overflow: hidden;
+      position: relative;
+    }
+    .product-img-fill {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      transition: transform 0.5s ease;
+    }
+    .product-card:hover .product-img-fill { transform: scale(1.04); }
+    .product-shape {
+      border-radius: 40% 60% 60% 40% / 50% 50% 50% 50%;
+      opacity: 0.35;
+    }
+    .product-info { display: flex; justify-content: space-between; align-items: flex-start; }
+    .product-name { font-size: 0.85rem; font-weight: 400; margin-bottom: 0.2rem; }
+    .product-cat { font-size: 0.72rem; color: var(--stone); letter-spacing: 0.1em; }
+    .product-price { font-family: var(--font-display); font-size: 1.1rem; font-weight: 300; }
+
+    /* ABOUT PAGE */
+    .about-hero {
+      padding-top: 80px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 70vh;
+    }
+    .about-visual {
+      background: var(--ink);
+      position: relative;
+      min-height: 500px;
+    }
+    .about-visual-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, #1A1714 0%, #3A3025 100%);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .about-monogram {
+      font-family: var(--font-display);
+      font-size: 12rem;
+      font-weight: 300;
+      color: rgba(200,169,126,0.15);
+      line-height: 1;
+      user-select: none;
+    }
+    .about-text {
+      padding: 6rem 4rem 4rem 5rem;
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .about-text .hero-eyebrow { margin-bottom: 1rem; }
+    .about-text h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 4vw, 4rem);
+      font-weight: 300;
+      line-height: 1.1;
+      margin-bottom: 2rem;
+    }
+    .about-text p { color: var(--stone); line-height: 1.9; margin-bottom: 1.2rem; font-size: 0.9rem; }
+    .about-stats {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 0; border-top: 1px solid var(--soft); border-left: 1px solid var(--soft);
+      margin: 5rem 5rem;
+    }
+    .stat {
+      padding: 3rem 2.5rem;
+      border-right: 1px solid var(--soft); border-bottom: 1px solid var(--soft);
+    }
+    .stat-num {
+      font-family: var(--font-display);
+      font-size: 3.5rem; font-weight: 300;
+      color: var(--warm);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+    .stat-label { font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--stone); }
+    .values-section { padding: 0 5rem 6rem; }
+    .values-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 3rem; margin-top: 3rem; }
+    .value-item h3 {
+      font-family: var(--font-display);
+      font-size: 1.4rem; font-weight: 400; margin-bottom: 0.7rem;
+    }
+    .value-item p { font-size: 0.85rem; color: var(--stone); line-height: 1.8; }
+
+    /* PRODUCTS PAGE */
+    .products-page-hero {
+      padding: 120px 5rem 4rem;
+      text-align: center;
+    }
+    .products-page-hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 6vw, 5.5rem);
+      font-weight: 300;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+    .products-page-hero p { color: var(--stone); font-size: 0.9rem; max-width: 400px; margin: 0 auto 2.5rem; }
+    .filter-bar {
+      display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap;
+      margin-bottom: 4rem;
+    }
+    .filter-btn {
+      padding: 0.5rem 1.4rem;
+      font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;
+      border: 1px solid var(--soft);
+      background: transparent; cursor: pointer;
+      font-family: var(--font-body);
+      color: var(--stone);
+      transition: all 0.2s;
+    }
+    .filter-btn:hover, .filter-btn.active { background: var(--ink); color: var(--cream); border-color: var(--ink); }
+    .products-full-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.2rem;
+      padding: 0 5rem 6rem;
+    }
+
+    /* CONTACT PAGE */
+    .contact-wrap {
+      padding-top: 80px;
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+    .contact-info {
+      background: var(--ink);
+      color: var(--cream);
+      padding: 6rem 4rem;
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .contact-info .hero-eyebrow { color: var(--warm); }
+    .contact-info h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 4vw, 4rem);
+      font-weight: 300;
+      line-height: 1.1;
+      margin-bottom: 2rem;
+    }
+    .contact-info p { color: rgba(245,242,237,0.55); font-size: 0.88rem; line-height: 1.9; margin-bottom: 2.5rem; }
+    .contact-details { display: flex; flex-direction: column; gap: 1.2rem; margin-top: 1rem; }
+    .contact-detail-label { font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--warm); margin-bottom: 0.25rem; }
+    .contact-detail-val { font-size: 0.88rem; color: var(--cream); }
+    .contact-form-wrap { padding: 6rem 4rem 4rem 5rem; display: flex; flex-direction: column; justify-content: center; }
+    .contact-form-wrap h2 {
+      font-family: var(--font-display);
+      font-size: 2rem; font-weight: 300; margin-bottom: 2.5rem;
+    }
+    .form-group { margin-bottom: 1.5rem; }
+    .form-group label {
+      display: block;
+      font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--stone); margin-bottom: 0.5rem;
+    }
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 0.9rem 0;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid var(--soft);
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      color: var(--ink);
+      outline: none;
+      transition: border-color 0.2s;
+      font-weight: 300;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus { border-bottom-color: var(--ink); }
+    .form-group textarea { resize: vertical; min-height: 100px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    .form-submit { margin-top: 1rem; }
+
+    /* FOOTER */
+    footer {
+      background: var(--ink);
+      color: var(--cream);
+      padding: 4rem 5rem 2.5rem;
+    }
+    .footer-grid {
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 3rem; margin-bottom: 3rem;
+    }
+    .footer-brand .nav-logo { color: var(--cream); display: block; margin-bottom: 1rem; }
+    .footer-brand p { font-size: 0.82rem; color: rgba(245,242,237,0.4); line-height: 1.8; max-width: 240px; }
+    .footer-col h4 { font-size: 0.68rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--warm); margin-bottom: 1.2rem; }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 0.6rem; }
+    .footer-col ul li a { font-size: 0.82rem; color: rgba(245,242,237,0.5); text-decoration: none; cursor: pointer; transition: color 0.2s; }
+    .footer-col ul li a:hover { color: var(--cream); }
+    .footer-bottom {
+      border-top: 1px solid rgba(245,242,237,0.1);
+      padding-top: 1.5rem;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .footer-bottom p { font-size: 0.72rem; color: rgba(245,242,237,0.3); }
+
+    /* NOTIFICATION */
+    .notif {
+      position: fixed; bottom: 2rem; right: 2rem;
+      background: var(--ink); color: var(--cream);
+      padding: 1rem 1.8rem;
+      font-size: 0.8rem; letter-spacing: 0.05em;
+      transform: translateY(100px); opacity: 0;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      z-index: 200;
+    }
+    .notif.show { transform: translateY(0); opacity: 1; }
+
+    @media (max-width: 900px) {
+      nav { padding: 1.2rem 1.5rem; }
+      .hero, .about-hero, .contact-wrap { grid-template-columns: 1fr; }
+      .hero-visual { min-height: 300px; }
+      .section, .products-page-hero, .about-text, .about-stats { padding-left: 1.5rem; padding-right: 1.5rem; }
+      .products-grid { grid-template-columns: repeat(2, 1fr); }
+      .products-full-grid { grid-template-columns: repeat(2, 1fr); padding: 0 1.5rem 4rem; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .about-stats { margin: 3rem 1.5rem; }
+      .values-section { padding: 0 1.5rem 4rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" onclick="showPage('home')">Maison</a>
+  <ul class="nav-links">
+    <li><a onclick="showPage('home')" class="active" id="nav-home">Home</a></li>
+    <li><a onclick="showPage('about')" id="nav-about">About</a></li>
+    <li><a onclick="showPage('products')" id="nav-products">Products</a></li>
+    <li><a onclick="showPage('contact')" id="nav-contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- ========== HOME PAGE ========== -->
+<div class="page active" id="page-home">
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-text">
+      <p class="hero-eyebrow">New Collection — Spring 2026</p>
+      <h1 class="hero-title">Crafted for<br><em>intentional</em><br>living</h1>
+      <p class="hero-sub">Thoughtfully designed objects that bring quiet beauty to everyday life. Each piece is chosen for its honesty of material and purpose.</p>
+      <div>
+        <button class="btn btn-dark" onclick="showPage('products')">Explore Collection</button>
+        <button class="btn btn-outline" onclick="showPage('about')">Our Story</button>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-visual-inner">
+        <div class="hero-shape"></div>
+        <svg width="200" height="260" viewBox="0 0 200 260" fill="none" style="position:relative;z-index:1;opacity:0.6;">
+          <rect x="40" y="20" width="120" height="160" rx="4" fill="#C8A97E" opacity="0.3"/>
+          <rect x="55" y="40" width="90" height="120" rx="2" fill="#C8A97E" opacity="0.4"/>
+          <circle cx="100" cy="200" r="30" fill="#C8A97E" opacity="0.2"/>
+        </svg>
+      </div>
+      <span class="hero-label">Spring / Summer 2026</span>
+      <div class="hero-card">
+        <p class="hero-card-label">New In</p>
+        <p class="hero-card-val">48</p>
+        <p class="hero-card-sub">Pieces this season</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Marquee -->
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <span>Free shipping over $150</span><span class="dot">·</span>
+      <span>Sustainably sourced</span><span class="dot">·</span>
+      <span>Handcrafted quality</span><span class="dot">·</span>
+      <span>30-day returns</span><span class="dot">·</span>
+      <span>New collection live now</span><span class="dot">·</span>
+      <span>Free shipping over $150</span><span class="dot">·</span>
+      <span>Sustainably sourced</span><span class="dot">·</span>
+      <span>Handcrafted quality</span><span class="dot">·</span>
+      <span>30-day returns</span><span class="dot">·</span>
+      <span>New collection live now</span><span class="dot">·</span>
+    </div>
+  </div>
+
+  <!-- Featured Products -->
+  <section class="section">
+    <div class="section-header">
+      <h2 class="section-title">Featured<br><em>Pieces</em></h2>
+      <a class="section-link" onclick="showPage('products')">View all →</a>
+    </div>
+    <div class="products-grid">
+      <div class="product-card" onclick="notify('Added to cart')">
+        <div class="product-img">
+          <div class="product-img-fill">
+            <svg width="160" height="200" viewBox="0 0 160 200"><rect x="20" y="20" width="120" height="160" rx="8" fill="#C8A97E" opacity="0.25"/><rect x="40" y="50" width="80" height="100" rx="4" fill="#C8A97E" opacity="0.3"/></svg>
+          </div>
+        </div>
+        <div class="product-info">
+          <div><p class="product-name">Linen Throw No. 3</p><p class="product-cat">Textiles</p></div>
+          <p class="product-price">$148</p>
+        </div>
+      </div>
+      <div class="product-card" onclick="notify('Added to cart')">
+        <div class="product-img" style="background:#E5DDD4;">
+          <div class="product-img-fill">
+            <svg width="140" height="190" viewBox="0 0 140 190"><ellipse cx="70" cy="95" rx="50" ry="70" fill="#9C9488" opacity="0.25"/><ellipse cx="70" cy="95" rx="30" ry="50" fill="#9C9488" opacity="0.3"/></svg>
+          </div>
+        </div>
+        <div class="product-info">
+          <div><p class="product-name">Stoneware Vessel</p><p class="product-cat">Ceramics</p></div>
+          <p class="product-price">$89</p>
+        </div>
+      </div>
+      <div class="product-card" onclick="notify('Added to cart')">
+        <div class="product-img" style="background:#DDD9D2;">
+          <div class="product-img-fill">
+            <svg width="150" height="190" viewBox="0 0 150 190"><rect x="30" y="60" width="90" height="110" rx="6" fill="#1A1714" opacity="0.12"/><rect x="50" y="20" width="50" height="60" rx="25" fill="#1A1714" opacity="0.1"/></svg>
+          </div>
+        </div>
+        <div class="product-info">
+          <div><p class="product-name">Walnut Tray</p><p class="product-cat">Home</p></div>
+          <p class="product-price">$125</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Story Strip -->
+  <section style="background: var(--ink); color: var(--cream); padding: 6rem 5rem; display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center;">
+    <div>
+      <p class="hero-eyebrow" style="color: var(--warm);">Our Philosophy</p>
+      <h2 style="font-family: var(--font-display); font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 300; line-height: 1.15; margin-bottom: 1.5rem;">Less, but<br><em style="color: var(--warm);">better</em></h2>
+      <p style="color: rgba(245,242,237,0.5); font-size: 0.9rem; line-height: 1.9; max-width: 380px; margin-bottom: 2rem;">We believe in the power of restraint. Every object in our collection has earned its place through beauty, utility, and longevity.</p>
+      <button class="btn" style="background: var(--warm); color: var(--ink);" onclick="showPage('about')">Learn More</button>
+    </div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: rgba(245,242,237,0.08);">
+      <div style="padding: 2.5rem; background: rgba(245,242,237,0.03);">
+        <p style="font-family: var(--font-display); font-size: 2.8rem; font-weight: 300; color: var(--warm);">2018</p>
+        <p style="font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(245,242,237,0.4);">Founded</p>
+      </div>
+      <div style="padding: 2.5rem; background: rgba(245,242,237,0.03);">
+        <p style="font-family: var(--font-display); font-size: 2.8rem; font-weight: 300; color: var(--warm);">40+</p>
+        <p style="font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(245,242,237,0.4);">Artisans</p>
+      </div>
+      <div style="padding: 2.5rem; background: rgba(245,242,237,0.03);">
+        <p style="font-family: var(--font-display); font-size: 2.8rem; font-weight: 300; color: var(--warm);">12k</p>
+        <p style="font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(245,242,237,0.4);">Happy customers</p>
+      </div>
+      <div style="padding: 2.5rem; background: rgba(245,242,237,0.03);">
+        <p style="font-family: var(--font-display); font-size: 2.8rem; font-weight: 300; color: var(--warm);">100%</p>
+        <p style="font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(245,242,237,0.4);">Sustainably sourced</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="nav-logo" onclick="showPage('home')">Maison</a>
+        <p>Objects for intentional living. Carefully selected, sustainably sourced, built to last.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Shop</h4>
+        <ul>
+          <li><a onclick="showPage('products')">All Products</a></li>
+          <li><a onclick="showPage('products')">New Arrivals</a></li>
+          <li><a onclick="showPage('products')">Textiles</a></li>
+          <li><a onclick="showPage('products')">Ceramics</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a onclick="showPage('about')">About Us</a></li>
+          <li><a onclick="showPage('contact')">Contact</a></li>
+          <li><a>Sustainability</a></li>
+          <li><a>Press</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Support</h4>
+        <ul>
+          <li><a>Shipping & Returns</a></li>
+          <li><a>FAQ</a></li>
+          <li><a>Care Guide</a></li>
+          <li><a>Trade Program</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Maison. All rights reserved.</p>
+      <p>Privacy · Terms</p>
+    </div>
+  </footer>
+
+</div>
+
+<!-- ========== ABOUT PAGE ========== -->
+<div class="page" id="page-about">
+  <div class="about-hero">
+    <div class="about-visual">
+      <div class="about-visual-overlay">
+        <span class="about-monogram">M</span>
+      </div>
+    </div>
+    <div class="about-text">
+      <p class="hero-eyebrow">Our Story</p>
+      <h1>Built on<br><em>craft &</em><br>conviction</h1>
+      <p>Maison was born from a simple frustration: a world full of objects that looked beautiful but were built to be replaced. We set out to do the opposite.</p>
+      <p>We work directly with a small network of artisans across Europe and Japan who share our obsession with material honesty and enduring form. Every piece in our collection has been touched by human hands and tested by time.</p>
+      <button class="btn btn-dark" onclick="showPage('products')">Explore the Collection</button>
+    </div>
+  </div>
+
+  <div class="about-stats">
+    <div class="stat"><p class="stat-num">2018</p><p class="stat-label">Year founded</p></div>
+    <div class="stat"><p class="stat-num">40+</p><p class="stat-label">Partner artisans</p></div>
+    <div class="stat"><p class="stat-num">12k</p><p class="stat-label">Customers worldwide</p></div>
+  </div>
+
+  <div class="values-section">
+    <h2 class="section-title">What we<br><em>stand for</em></h2>
+    <div class="values-grid">
+      <div class="value-item">
+        <h3>Material Honesty</h3>
+        <p>We use what nature provides — linen, clay, walnut, wool — without masking it. Each material is chosen for its character and its ability to age gracefully.</p>
+      </div>
+      <div class="value-item">
+        <h3>Slow Making</h3>
+        <p>Nothing in our collection is mass produced. We work with makers who take the time to get it right, even if that means smaller batches and longer waits.</p>
+      </div>
+      <div class="value-item">
+        <h3>Radical Durability</h3>
+        <p>We design for decades, not seasons. If something breaks, we'll repair it. If it wears, it should wear beautifully. Buy less. Buy better.</p>
+      </div>
+      <div class="value-item">
+        <h3>Honest Commerce</h3>
+        <p>We publish the cost of everything we make and why we charge what we do. Our artisans are paid fairly. Our prices reflect that.</p>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="nav-logo" onclick="showPage('home')">Maison</a>
+        <p>Objects for intentional living. Carefully selected, sustainably sourced, built to last.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Shop</h4>
+        <ul>
+          <li><a onclick="showPage('products')">All Products</a></li>
+          <li><a onclick="showPage('products')">New Arrivals</a></li>
+          <li><a onclick="showPage('products')">Textiles</a></li>
+          <li><a onclick="showPage('products')">Ceramics</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a onclick="showPage('about')">About Us</a></li>
+          <li><a onclick="showPage('contact')">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Support</h4>
+        <ul>
+          <li><a>Shipping & Returns</a></li>
+          <li><a>FAQ</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Maison. All rights reserved.</p>
+    </div>
+  </footer>
+</div>
+
+<!-- ========== PRODUCTS PAGE ========== -->
+<div class="page" id="page-products">
+  <div class="products-page-hero">
+    <p class="hero-eyebrow">Spring / Summer 2026</p>
+    <h1>The<br><em>Collection</em></h1>
+    <p>48 pieces. All thoughtfully made.</p>
+  </div>
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="setFilter(this, 'all')">All</button>
+    <button class="filter-btn" onclick="setFilter(this, 'textiles')">Textiles</button>
+    <button class="filter-btn" onclick="setFilter(this, 'ceramics')">Ceramics</button>
+    <button class="filter-btn" onclick="setFilter(this, 'home')">Home</button>
+    <button class="filter-btn" onclick="setFilter(this, 'lighting')">Lighting</button>
+  </div>
+  <div class="products-full-grid" id="products-grid">
+    <!-- Generated by JS -->
+  </div>
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="nav-logo" onclick="showPage('home')">Maison</a>
+        <p>Objects for intentional living. Carefully selected, sustainably sourced, built to last.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Shop</h4>
+        <ul>
+          <li><a onclick="showPage('products')">All Products</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a onclick="showPage('about')">About Us</a></li>
+          <li><a onclick="showPage('contact')">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Support</h4>
+        <ul><li><a>FAQ</a></li></ul>
+      </div>
+    </div>
+    <div class="footer-bottom"><p>© 2026 Maison. All rights reserved.</p></div>
+  </footer>
+</div>
+
+<!-- ========== CONTACT PAGE ========== -->
+<div class="page" id="page-contact">
+  <div class="contact-wrap">
+    <div class="contact-info">
+      <p class="hero-eyebrow">Get in Touch</p>
+      <h1>We'd love to<br>hear from<br><em>you</em></h1>
+      <p>Whether you have a question about a product, an order, or just want to say hello — our small team reads every message and responds within one business day.</p>
+      <div class="contact-details">
+        <div>
+          <p class="contact-detail-label">Email</p>
+          <p class="contact-detail-val">hello@maisonshop.com</p>
+        </div>
+        <div>
+          <p class="contact-detail-label">Phone</p>
+          <p class="contact-detail-val">+1 (415) 555 0192</p>
+        </div>
+        <div>
+          <p class="contact-detail-label">Studio</p>
+          <p class="contact-detail-val">128 Oak Street, San Francisco, CA</p>
+        </div>
+        <div>
+          <p class="contact-detail-label">Hours</p>
+          <p class="contact-detail-val">Mon–Fri, 9am–5pm PST</p>
+        </div>
+      </div>
+    </div>
+    <div class="contact-form-wrap">
+      <h2>Send us a<br><em style="font-family: var(--font-display);">message</em></h2>
+      <div class="form-row">
+        <div class="form-group">
+          <label>First Name</label>
+          <input type="text" placeholder="Jane"/>
+        </div>
+        <div class="form-group">
+          <label>Last Name</label>
+          <input type="text" placeholder="Doe"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" placeholder="jane@example.com"/>
+      </div>
+      <div class="form-group">
+        <label>Subject</label>
+        <select>
+          <option>Order inquiry</option>
+          <option>Product question</option>
+          <option>Returns & exchanges</option>
+          <option>Trade program</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Message</label>
+        <textarea placeholder="Tell us how we can help…"></textarea>
+      </div>
+      <div class="form-submit">
+        <button class="btn btn-dark" onclick="submitForm()">Send Message</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NOTIFICATION -->
+<div class="notif" id="notif"></div>
+
+<script>
+  // PRODUCTS DATA
+  const allProducts = [
+    { name: "Linen Throw No. 3", cat: "textiles", price: 148, bg: "#E8E0D4", shape: "M20,20 Q100,0 160,30 Q180,100 150,170 Q80,200 20,170 Q-10,100 20,20Z" },
+    { name: "Stoneware Vessel", cat: "ceramics", price: 89, bg: "#E0DADA", shape: "M50,10 Q120,5 140,80 Q155,150 100,185 Q45,200 20,130 Q0,60 50,10Z" },
+    { name: "Walnut Tray", cat: "home", price: 125, bg: "#DDD4C4", shape: "M10,40 L150,40 L150,160 L10,160Z" },
+    { name: "Wool Cushion", cat: "textiles", price: 72, bg: "#E4DDD5", shape: "M30,30 Q100,10 150,50 Q180,120 130,170 Q60,195 20,150 Q-5,90 30,30Z" },
+    { name: "Clay Plate Set", cat: "ceramics", price: 110, bg: "#E0D8D0", shape: "M80,10 A70,70 0 1,1 79.9,10Z" },
+    { name: "Brass Candle Holder", cat: "lighting", price: 64, bg: "#E8E0CA", shape: "M60,0 L80,0 L90,150 L50,150Z" },
+    { name: "Linen Napkins (4)", cat: "textiles", price: 48, bg: "#DDDAD4", shape: "M10,10 L150,10 L150,190 L10,190Z" },
+    { name: "Stone Soap Dish", cat: "home", price: 38, bg: "#E4E0D8", shape: "M20,60 Q60,20 130,40 Q170,70 150,130 Q120,170 50,160 Q10,140 20,60Z" },
+  ];
+
+  let activeFilter = 'all';
+
+  function renderProducts(filter) {
+    const grid = document.getElementById('products-grid');
+    const list = filter === 'all' ? allProducts : allProducts.filter(p => p.cat === filter);
+    grid.innerHTML = list.map(p => `
+      <div class="product-card" onclick="notify('Added to cart')">
+        <div class="product-img" style="background:${p.bg}">
+          <div class="product-img-fill">
+            <svg width="130" height="180" viewBox="0 0 160 200" fill="none">
+              <path d="${p.shape}" fill="#C8A97E" opacity="0.35"/>
+            </svg>
+          </div>
+        </div>
+        <div class="product-info">
+          <div><p class="product-name">${p.name}</p><p class="product-cat" style="text-transform:capitalize">${p.cat}</p></div>
+          <p class="product-price">$${p.price}</p>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function setFilter(btn, filter) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeFilter = filter;
+    renderProducts(filter);
+  }
+
+  // PAGE NAVIGATION
+  function showPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+    document.getElementById('page-' + id).classList.add('active');
+    document.getElementById('nav-' + id).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (id === 'products') renderProducts(activeFilter);
+  }
+
+  // NOTIFICATION
+  function notify(msg) {
+    const el = document.getElementById('notif');
+    el.textContent = msg;
+    el.classList.add('show');
+    setTimeout(() => el.classList.remove('show'), 2200);
+  }
+
+  function submitForm() {
+    notify('Message sent — we\'ll be in touch soon!');
+  }
+
+  // INIT
+  renderProducts('all');
+</script>
+</body>
+</html>
